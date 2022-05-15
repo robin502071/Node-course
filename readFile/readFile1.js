@@ -15,9 +15,21 @@ const p = new Promise((resolve, reject) => {
   });
 });
 
-p.then((data) => {
-  console.log('成功了');
-  console.log(data);
-}).catch((err) => {
-  console.log(err);
-});
+// p.then((data) => {
+//   console.log('成功了');
+//   console.log(data);
+// }).catch((err) => {
+//   console.log('拍謝失敗');
+//   console.log(err);
+// });
+
+async function doP() {
+  try {
+    const result = await p;
+    console.log(result);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+doP();
