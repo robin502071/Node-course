@@ -5,6 +5,10 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mysql = require('mysql2/promise');
+// 因為 CORS 的關係，瀏覽器把 response 擋住
+const cors = require('cors');
+app.use(cors());
+
 require('dotenv').config();
 let pool = mysql.createPool({
   host: process.env.DB_HOST,
