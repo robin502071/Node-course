@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react';
 
 const Stock = () => {
   const [stocks, setStocks] = useState([]);
-
+  
   useEffect(() => {
     let getStocks = async () => {
-      let response = await axios.get('http://localhost:3001/stocks');
+      let response = await axios.get(`${process.env.REACT_APP_API_URL}/stocks`);
       setStocks(response.data);
     };
     getStocks();

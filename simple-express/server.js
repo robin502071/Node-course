@@ -40,13 +40,23 @@ app.get('/stocks/:stockId', async (request, response, next) => {
   // 計算總共有幾頁
   const perPage = 5; // 每頁幾筆
   const lastPage = Math.ceil(total / perPage);
-
+ 
   // 計算 offsect 是多少 => 要跳過幾筆
   let offset = (page - 1) * perPage;
-  console.log(offset);
+
+  let [pageResults] = await pool.execute(
+    'SELECT * FROM stock_prices WHERE stock_id = ? ORDER BY date DESC LIMIT  ? OFFSET ?',
+    [request.params.stockId, perPage, offset]
+  );
+
+
   response.json({
-    paginaton: {},
-    data,
+    pagination: {
+      total,
+      lastPage,
+      page
+    },
+    data: pageResults
   });
 });
 
