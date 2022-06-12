@@ -3,8 +3,11 @@
 const express = require('express');
 // 利用express來建立一個express application
 const app = express();
+
 const path = require('path');
 require('dotenv').config();
+
+
 // 因為 CORS 的關係，瀏覽器把 response 擋住
 // 使用第三方開發的中間件 cors
 const cors = require('cors');

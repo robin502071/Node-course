@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 //module.exports = router;
 const pool = require('../utils/db');
+
 const { body, validationResult } = require('express-validator');
 const path = require('path');
 const bcrypt = require('bcrypt');
@@ -64,6 +65,7 @@ const registerRules = [
     })
     .withMessage('密碼不一致'),
 ];
+
 // /api/auth/register
 router.post(
   '/register',
@@ -121,7 +123,7 @@ router.post(
   }
 );
 
-// /api/auth/register
+// /api/auth/login
 router.post('/login', async (req, res, next) => {
   // 確認資料有收到
   console.log('req.body***', req.body);
@@ -159,6 +161,7 @@ router.post('/login', async (req, res, next) => {
     name: member.name,
     photo: member.photo,
   };
+  // 利用套件 sessions 資料夾就會在這邊新增檔案
   req.session.member = returnMember;
   // 回覆資料給前端
   res.json({ code: 0, member: returnMember });
