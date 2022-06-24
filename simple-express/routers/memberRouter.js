@@ -3,6 +3,7 @@ const router = express.Router();
 
 // /api/member/info
 router.get('/info', (req, res, next) => {
+  
   if (req.session.member) {
     // 表示登入過
     return res.json(req.session.member);

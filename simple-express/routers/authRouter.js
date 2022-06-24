@@ -75,7 +75,6 @@ router.post(
     // 1. req.params <-- 網址上的路由參數 e.g, /:stockId
     // 2. req.query  <-- 網址上的 query string
     // 3. req.body <-- 就是前端傳送過來的資料
-    console.log('register body*************', req.body);
     // 驗證資料
     // 拿到驗證結果
     const validateResults = validationResult(req);
@@ -102,7 +101,7 @@ router.post(
     }
 
     // 圖片處理完成後，會被放在 req 物件裡
-    console.log('req.file', req.file);
+    // console.log('req.file', req.file);
     // 最終前端需要的網址: http://localhost:3001/public/members/1655003030907.jpg
     // 可以由後端來組合這個網址，也可以由前端來組合
     // 記得不要把 http://locahost:3001 這個存進資料庫，因為正式環境部署會不同
@@ -111,13 +110,13 @@ router.post(
     let photo = req.file ? '/members/' + req.file.filename : '';
     // TODO: 密碼雜湊 hash //npm i bcrypt
     let hashPassword = await bcrypt.hash(req.body.password, 10);
-    console.log('雜湊密碼:' + hashPassword);
+
     // TODO: save to db
     let [result] = await pool.execute(
       'INSERT INTO members (email, password, name, photo) VALUES (?,?,?,?)',
       [req.body.email, hashPassword, req.body.name, photo]
     );
-    console.log('INSERT INTO****:', result);
+   
     // response
     res.json({ result: 'ok' });
   }
@@ -126,7 +125,6 @@ router.post(
 // /api/auth/login
 router.post('/login', async (req, res, next) => {
   // 確認資料有收到
-  console.log('req.body***', req.body);
   // 確認有沒有這個帳號
   let [member] = await pool.execute(
     'SELECT id, name ,email, password, photo FROM members WHERE email = ?',
@@ -162,6 +160,7 @@ router.post('/login', async (req, res, next) => {
     photo: member.photo,
   };
   // 利用套件 sessions 資料夾就會在這邊新增檔案
+
   req.session.member = returnMember;
   // 回覆資料給前端
   res.json({ code: 0, member: returnMember });

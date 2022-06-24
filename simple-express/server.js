@@ -66,6 +66,7 @@ app.use(express.static(path.join(__dirname, 'public', 'images')));
 // http://localhost:3001/images/test1.jpg
 // 方法2: 指定網址=> 前後配對^^
 app.use('/images/members', express.static(path.join(__dirname, 'public','members')));
+app.use('/images/upload', express.static(path.join(__dirname, 'public','upload')));
 
 const StockRouter = require('./routers/stockRouter');
 app.use('/api/stocks', StockRouter);
@@ -75,6 +76,9 @@ app.use('/api/auth', AuthRouter);
 
 const MemberRouter = require('./routers/memberRouter');
 app.use('/api/member', MemberRouter);
+
+const UploadRouter = require('./routers/uploadRouter');
+app.use('/api/upload', UploadRouter);
 
 app.listen(3001, () => {
   console.log('Server running at port 3001');
