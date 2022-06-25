@@ -73,7 +73,7 @@ router.post(
   registerRules,
   async (req, res, next) => {
     // 1. req.params <-- 網址上的路由參數 e.g, /:stockId
-    // 2. req.query  <-- 網址上的 query string
+    // 2. req.query  <-- 網址上的 query string e.g, ?name=lucy
     // 3. req.body <-- 就是前端傳送過來的資料
     // 驗證資料
     // 拿到驗證結果
